@@ -8,17 +8,21 @@ __put before any other script tags__
 
 # console
 **Attributes**
- * log(...data: ...any):
+ * log(...data: `...any`):
     output a log.
- * setHidden(hidden: boolean):
+ * setHidden(hidden: `boolean`):
     set whether `console button`s are hidden.
- * setButtonWidth(width: number):
+ * clear():
+    clear console logs.
+ * setStopped(stopped: `boolean`):
+    set whether console logging is stopped.
+ * setButtonWidth(width: `number`):
     set `console button`'s width, heigt depends on width.
     `width` is what parsentage of `console button`'s width of window width.
     default to 10 without settings.
- * setLogIcon(src: string):
+ * setLogIcon(src: `string`):
     set `console botton`'s image src.
- * setPositionByQuadrant(quadrant: number):
+ * setPositionByQuadrant(quadrant: `number`):
     set `console botton`'s position by math quadrant.
     default to 1 without settings.
 

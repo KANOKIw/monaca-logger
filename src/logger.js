@@ -4,6 +4,7 @@ var CURRENT_BUTTON_WIDTH = 10;
 var EV_QUADRANT = 1;
 var LOG_ICON = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSoguY19n3ex7GN9IA6A0K_L2aB7Kd-zEDnA&usqp=CAU";
 var IMG_LOADING_ICON = "https://cdn3.emoji.gg/emojis/1792-loading.gif";
+var STOPED = false;
 
 
 class console{
@@ -29,6 +30,8 @@ class console{
             </li>
             <hr class="log_content_divider">
         `;
+
+        if (STOPED) return;
         
         if (PENDING_LOGS.length > 0 || clses.length == 0){
             PENDING_LOGS.push({content: log_, type: "log"});
@@ -69,6 +72,21 @@ class console{
             this.hide();
         else
             this.show();
+    }
+
+
+    static clear(){
+        var logs = document.getElementsByClassName("log");
+
+        PENDING_LOGS = [];
+        for (var log of logs){
+            log.innerHTML = "";
+        }
+    }
+
+
+    static setStopped(_bool){
+        STOPED = _bool;
     }
 
 
@@ -412,7 +430,7 @@ function __init__(button_width){
         <div class="log_opener_wrapper" style="display: flex; position: absolute; z-index: 1001;">
             <img class="log_opener" style="padding: 10px;" alt=""></img>
         </div>
-        <div class="log" style="z-index: 1000; display: none; background-color: white; min-width: 100vw; width: 100vw; height: 100vh; padding-left: 2px;">
+        <div class="log" style="z-index: 1000; display: none; background-color: white; min-width: 100vw; width: 100vw; min-height: 100vh; height: 100vh; padding-left: 2px;">
             <ul class="log_message_ul">
             </ul>
         </div>`;
@@ -502,19 +520,6 @@ function _set_log_height(){
 }
 
 
-function onError(event){
-    var log = event;
-    if (event.error){
-        if (event.error.stack){
-            log = event.error.stack;
-        } else {
-            log = event.error;
-        }
-    }
-    console._error_log(event.error, log);
-}
-
-
 /**
  * 
  * @returns boolean
@@ -542,6 +547,19 @@ function write_pending_logs(){
         }
     }
     return PENDING_LOGS.length == 0;
+}
+
+
+function onError(event){
+    var log = event;
+    if (event.error){
+        if (event.error.stack){
+            log = event.error.stack;
+        } else {
+            log = event.error;
+        }
+    }
+    console._error_log(event.error, log);
 }
 
 
