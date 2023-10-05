@@ -193,7 +193,6 @@ class console{
                             __log.join(" ")
                             .replace("\n", "<br>")
                             .replace("at ", "&nbsp;&nbsp;&nbsp;&nbsp;at ")
-                            .replace("@http", "&nbsp;&nbsp;&nbsp;&nbsp;@http")
                             .replace(" ", "&nbsp;")
                         }
                     </span>
