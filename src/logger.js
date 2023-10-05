@@ -180,6 +180,18 @@ class console{
     static _error_log(error, ...__log){
         var location = this._getLocation(error);
         var clses = document.getElementsByClassName("log_message_ul");
+        var _log = __log.join(" ").replace("\n", "<br>");
+        var log_athttp_pos = _log.indexOf("@http");
+
+        if (log_athttp_pos != -1){
+            _log = _log.substring(0, log_athttp_pos) + "<br>" + _log.substring(log_athttp_pos, _log.length);
+        }
+        else {
+            _log = _log.replace("at ", "&nbsp;&nbsp;&nbsp;&nbsp;at ");
+            original_console.log(_log)
+        }
+        _log = _log.replace(" ", "&nbsp;");
+        
         var log = `
             <li class="log_message_element">
                 <div class="log_location">${location}&nbsp;</div>
@@ -189,12 +201,7 @@ class console{
                     </span>
                     ▶
                     <span style="color: red;">
-                        ${
-                            __log.join(" ")
-                            .replace("\n", "<br>")
-                            .replace("at ", "&nbsp;&nbsp;&nbsp;&nbsp;at ")
-                            .replace(" ", "&nbsp;")
-                        }
+                        ${_log}
                     </span>
                 </div>
             </li>
