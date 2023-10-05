@@ -191,6 +191,20 @@ class console{
             _log = _log.replaceAll("at ", "<br>&nbsp;&nbsp;&nbsp;&nbsp;at ");
             _log = _log.replace("<br>&nbsp;&nbsp;&nbsp;&nbsp;at ", "&nbsp;&nbsp;&nbsp;&nbsp;at ");
         }
+        
+        var url_childs = _log.split("<br>");
+        var urls = [];
+        var url_pattern = /https?:\/\/[^\s]+/g;
+
+        url_childs.shift();
+        for (var url of url_childs){
+            var _found = url.match(url_pattern);
+            if (_found)
+                _found.forEach(ul => urls.push(ul));
+        }
+        for (var val of urls){
+            _log = _log.replace(val, get_location_from_url(val));
+        }
         _log = _log.replace(" ", "&nbsp;");
         
         var log = `
@@ -263,10 +277,11 @@ class console{
                         lineNumber = _splited[_splited.length -2],
                         _fin = _splited[_splited.length -3],
                         _slicer = _fin.lastIndexOf("/") +1,
+                        que = _fin.indexOf("?"),
                         fileName = _fin;
                     
                     if (_slicer !== 0)
-                        fileName = _fin.slice(_fin.lastIndexOf("/") +1, _fin.length);
+                        fileName = _fin.slice(_slicer, _fin.length);
 
                     if (fileName.indexOf("?") != -1)
                         fileName = fileName.substring(0, fileName.indexOf("?"));
@@ -279,6 +294,27 @@ class console{
             return "undefined";
         }
     }
+}
+
+/**
+ * 
+ * @param {string} url
+ *  raw url
+ * @returns {string}
+ *  location
+ */
+function get_location_from_url(url){
+    var sliced = url.lastIndexOf("/") +1;
+    var que = url.indexOf("?");
+    var loc = "";
+
+    if (sliced !== 0)
+        loc = url.slice(sliced, url.length);
+    if (loc.indexOf("?") != -1)
+        loc = loc.substring(0, que);
+    if (loc.substring(0, 1) == ":")
+        loc = "index.html"+loc;
+    return loc;
 }
 
 
