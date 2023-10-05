@@ -1,16 +1,25 @@
 # monaca-logger
 A module makes console visible on monaca education editor
 
-**console**
+# import
+`<script src="https://github.com/KANOKIw/monaca-logger/releases/download/1.1.1/logger.js"></script>`
+
+__put before any other script tags__
+
+# console
+**Attributes**
  * log(...data: ...any):
-    output a log
+    output a log.
  * setHidden(hidden: boolean):
-    set whether console and its button are hidden
- * set_button_width():
-    set `console button` width, heigt depends on width
- * set_log_icon(path: string):
-    set `console botton`'s image path
- * set_position_by_quadrant(quadrant: number):
-    set `console botton`'s position by math quadrant
+    set whether `console button`s are hidden.
+ * setButtonWidth(width: number):
+    set `console button`'s width, heigt depends on width.
+    `width` is what parsentage of `console button`'s width of window width.
+    default to 10 without settings.
+ * setLogIcon(src: string):
+    set `console botton`'s image src.
+ * setPositionByQuadrant(quadrant: number):
+    set `console botton`'s position by math quadrant.
+    default to 1 without settings.
 
 **Code Based on Google Chrome for PC**

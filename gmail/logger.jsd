@@ -1,7 +1,7 @@
 var LINED = false;
 var PENDING_LOGS = [];
 var CURRENT_BUTTON_WIDTH = 10;
-var EV_QUADRANT = 4;
+var EV_QUADRANT = 1;
 var LOG_ICON = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSoguY19n3ex7GN9IA6A0K_L2aB7Kd-zEDnA&usqp=CAU";
 var IMG_LOADING_ICON = "https://cdn3.emoji.gg/emojis/1792-loading.gif";
 
@@ -72,8 +72,11 @@ class console{
     }
 
 
-    static set_button_width(button_width){
+    static setButtonWidth(button_width){
         var imgs = document.getElementsByClassName("log_opener");
+        var padding_vw = 10 / window.innerWidth;
+        button_width -= padding_vw*100;
+
         var div_val = imgs[0].naturalHeight/imgs[0].naturalWidth;
         var he = button_width*(div_val)+"vw";
 
@@ -87,11 +90,6 @@ class console{
             elem.style.paddingTop = he;
         });
         CURRENT_BUTTON_WIDTH = button_width;
-        Array.from(document.getElementsByClassName("logger"))
-        .forEach(logger => {
-            logger.style.width = (button_width/100)*window.innerWidth + 24 + "px";
-            logger.style.height = (button_width*div_val/100)*window.innerWidth + 24 + "px";
-        });
     }
 
 
@@ -99,7 +97,7 @@ class console{
      * 
      * @param {number} quadrant 
      */
-    static set_position_by_quadrant(quadrant){
+    static setPositionByQuadrant(quadrant){
         var wrapper = document.getElementsByClassName("log_opener_wrapper");
 
         function _forEach(func){
@@ -140,14 +138,14 @@ class console{
     }
 
 
-    static set_log_icon(path){
+    static setLogIcon(path){
         var imgs = document.getElementsByClassName("log_opener");
 
         for (var img of imgs){
             img.src = path;
             img.style.backgroundImage = `url("${IMG_LOADING_ICON}")`;
             img.addEventListener("load", function _load(){
-                console.set_button_width(CURRENT_BUTTON_WIDTH);
+                console.setButtonWidth(CURRENT_BUTTON_WIDTH);
                 this.style.backgroundImage = "none";
                 this.removeEventListener("load", _load);
             });
@@ -425,13 +423,13 @@ function __init__(button_width){
 
     for (var opener of log_openers){
         opener.addEventListener("load", function _load(){
-            console.set_button_width(CURRENT_BUTTON_WIDTH);
+            console.setButtonWidth(CURRENT_BUTTON_WIDTH);
             this.style.backgroundImage = "none";
             this.removeEventListener("load", _load);
         });
 
         opener.src = LOG_ICON;
-        console.set_button_width(button_width);
+        console.setButtonWidth(button_width);
         
         opener.addEventListener("click", function(){
             if (LINED){
@@ -448,7 +446,7 @@ function __init__(button_width){
                     log.style.display = "none";
                 });
 
-                console.set_position_by_quadrant(EV_QUADRANT);
+                console.setPositionByQuadrant(EV_QUADRANT);
             } else {
                 Array.from(document.getElementsByClassName("logger"))
                 .forEach(logger => {
@@ -549,7 +547,7 @@ function write_pending_logs(){
 
 function onLoad(){
     set_logger();
-    console.set_position_by_quadrant(EV_QUADRANT);
+    console.setPositionByQuadrant(EV_QUADRANT);
     var me = this.setInterval(
         function(){
             var clearable = write_pending_logs();
