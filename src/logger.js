@@ -185,10 +185,11 @@ class console{
 
         if (log_athttp_pos != -1){
             _log = _log.substring(0, log_athttp_pos) + "<br>" + _log.substring(log_athttp_pos, _log.length);
+            _log = _log.replaceAll("@http", "&nbsp;&nbsp;&nbsp;&nbsp;@http");
         }
         else {
-            _log = _log.replace("at ", "&nbsp;&nbsp;&nbsp;&nbsp;at ");
-            original_console.log(_log)
+            _log = _log.replaceAll("at ", "<br>&nbsp;&nbsp;&nbsp;&nbsp;at ");
+            _log = _log.replace("<br>&nbsp;&nbsp;&nbsp;&nbsp;at ", "&nbsp;&nbsp;&nbsp;&nbsp;at ");
         }
         _log = _log.replace(" ", "&nbsp;");
         
