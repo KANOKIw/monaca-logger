@@ -2,7 +2,7 @@
 A module makes console visible on monaca education editor
 
 ## import
-`<script src="https://github.com/KANOKIw/monaca-logger/releases/download/1.1.3/logger.js"></script>`
+`<script src="https://github.com/KANOKIw/monaca-logger/releases/download/1.1.4/logger.js"></script>`
 
 __put before any other script tags__
 
@@ -26,4 +26,4 @@ __put before any other script tags__
     set `console botton`'s position by math quadrant.
     default to 1 without settings.
 
-**Code Based on Google Chrome for PC**
+**Code Based on Google Chrome for PC
