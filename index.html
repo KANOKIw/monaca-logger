@@ -11,21 +11,20 @@
     <script src="src/logger.js"></script>
     <script>
         function a(){
-            console.log("e  aw");
+            console.log("calling b...");
             b();
         }
         function b(){
-            console.log("b");
+            console.log("raising an exception...");
             throw new TypeError("not ok");
         }
+        console.setButtonWidth(20);
+        console.setPositionByQuadrant(4);
         window.onload = function(){
-            //console.setPositionByQuadrant(3);
-            console.setButtonWidth(15);
-            console.log("e");
+            console.log("load");
             console.setLogIcon("https://play-lh.googleusercontent.com/xKUdbWyGGv4lbYH5Fzrz-USBEKk84Aw43IPmnl9VVq4jewz4y8JrwOivPsAYCtTbDbdt");
-            setTimeout(function(){console.clear()},30000);
+            setTimeout(function(){console.clear();console.log("log cleared!");},30000);
             a();
-            a.ww.a;
         }
         e.n;
     </script>

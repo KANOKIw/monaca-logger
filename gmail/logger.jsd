@@ -1,6 +1,6 @@
 var LINED = false;
 var PENDING_LOGS = [];
-var CURRENT_BUTTON_WIDTH = 10;
+var CURRENT_BUTTON_WIDTH = 15;
 var EV_QUADRANT = 1;
 var LOG_ICON = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSoguY19n3ex7GN9IA6A0K_L2aB7Kd-zEDnA&usqp=CAU";
 var IMG_LOADING_ICON = "https://cdn3.emoji.gg/emojis/1792-loading.gif";
@@ -21,10 +21,10 @@ class console{
             <li class="log_message_element">
                 <div class="log_location">${location}&nbsp;</div>
                 <div class="log_message">▶ ${
-                    __log.join(" ")
-                    .replace(" ", "&nbsp;")
-                    .replace("<", "&lt;")
-                    .replace(">", "&gt;")
+                    __log.join("")
+                    .replaceAll(" ", "&nbsp;")
+                    .replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;")
                     .replace("\n", "<br>")
                 }</div>
             </li>
@@ -90,24 +90,34 @@ class console{
     }
 
 
+    /**
+     * 
+     * @param {number} button_width
+     *  button_width`vw`
+     * @returns 
+     *  no return
+     */
     static setButtonWidth(button_width){
         var imgs = document.getElementsByClassName("log_opener");
-        var padding_vw = 10 / window.innerWidth;
+        var padding_vw = 0 / window.innerWidth;
+
         button_width -= padding_vw*100;
-
-        var div_val = imgs[0].naturalHeight/imgs[0].naturalWidth;
-        var he = button_width*(div_val)+"vw";
-
-        Array.from(imgs)
-        .forEach(img => {
-            img.style.width = button_width+"vw";
-            img.style.height = he;
-        });
-        Array.from(document.getElementsByClassName("log"))
-        .forEach(elem => {
-            elem.style.paddingTop = he;
-        });
         CURRENT_BUTTON_WIDTH = button_width;
+        
+        if (imgs.length > 0){
+            var div_val = imgs[0].naturalHeight/imgs[0].naturalWidth;
+            var he = button_width*(div_val)+"vw";
+
+            Array.from(imgs)
+            .forEach(img => {
+                img.style.width = button_width+"vw";
+                img.style.height = he;
+            });
+            Array.from(document.getElementsByClassName("log"))
+            .forEach(elem => {
+                elem.style.paddingTop = he;
+            });
+        }
     }
 
 
@@ -196,7 +206,10 @@ class console{
     static _error_log(error, ...__log){
         var location = this._getLocation(error);
         var clses = document.getElementsByClassName("log_message_ul");
-        var _log = __log.join(" ").replace("\n", "<br>");
+        var _log = __log.join(" ")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replace("\n", "<br>");
         var log_athttp_pos = _log.indexOf("@http");
 
         if (log_athttp_pos != -1){
@@ -219,7 +232,7 @@ class console{
                 _found.forEach(ul => urls.push(ul));
         }
         for (var val of urls){
-            _log = _log.replace(val, get_location_from_url(val));
+            _log = _log.replaceAll(val, get_location_from_url(val));
         }
         _log = _log.replace(" ", "&nbsp;");
         
@@ -428,7 +441,7 @@ function __init__(button_width){
         logger.style.position = "fixed";
         logger.innerHTML = `
         <div class="log_opener_wrapper" style="display: flex; position: absolute; z-index: 1001;">
-            <img class="log_opener" style="padding: 10px;" alt=""></img>
+            <img class="log_opener" alt=""></img>
         </div>
         <div class="log" style="z-index: 1000; display: none; background-color: white; min-width: 100vw; width: 100vw; min-height: 100vh; height: 100vh; padding-left: 2px;">
             <ul class="log_message_ul">

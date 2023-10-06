@@ -90,24 +90,34 @@ class console{
     }
 
 
+    /**
+     * 
+     * @param {number} button_width
+     *  button_width`vw`
+     * @returns 
+     *  no return
+     */
     static setButtonWidth(button_width){
         var imgs = document.getElementsByClassName("log_opener");
         var padding_vw = 0 / window.innerWidth;
+
         button_width -= padding_vw*100;
-
-        var div_val = imgs[0].naturalHeight/imgs[0].naturalWidth;
-        var he = button_width*(div_val)+"vw";
-
-        Array.from(imgs)
-        .forEach(img => {
-            img.style.width = button_width+"vw";
-            img.style.height = he;
-        });
-        Array.from(document.getElementsByClassName("log"))
-        .forEach(elem => {
-            elem.style.paddingTop = he;
-        });
         CURRENT_BUTTON_WIDTH = button_width;
+        
+        if (imgs.length > 0){
+            var div_val = imgs[0].naturalHeight/imgs[0].naturalWidth;
+            var he = button_width*(div_val)+"vw";
+
+            Array.from(imgs)
+            .forEach(img => {
+                img.style.width = button_width+"vw";
+                img.style.height = he;
+            });
+            Array.from(document.getElementsByClassName("log"))
+            .forEach(elem => {
+                elem.style.paddingTop = he;
+            });
+        }
     }
 
 
@@ -197,9 +207,9 @@ class console{
         var location = this._getLocation(error);
         var clses = document.getElementsByClassName("log_message_ul");
         var _log = __log.join(" ")
-            .replace("\n", "<br>")
             .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;");
+            .replaceAll(">", "&gt;")
+            .replace("\n", "<br>");
         var log_athttp_pos = _log.indexOf("@http");
 
         if (log_athttp_pos != -1){
