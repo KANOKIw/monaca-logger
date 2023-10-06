@@ -1,6 +1,6 @@
 var LINED = false;
 var PENDING_LOGS = [];
-var CURRENT_BUTTON_WIDTH = 10;
+var CURRENT_BUTTON_WIDTH = 15;
 var EV_QUADRANT = 1;
 var LOG_ICON = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSoguY19n3ex7GN9IA6A0K_L2aB7Kd-zEDnA&usqp=CAU";
 var IMG_LOADING_ICON = "https://cdn3.emoji.gg/emojis/1792-loading.gif";
@@ -92,7 +92,7 @@ class console{
 
     static setButtonWidth(button_width){
         var imgs = document.getElementsByClassName("log_opener");
-        var padding_vw = 10 / window.innerWidth;
+        var padding_vw = 0 / window.innerWidth;
         button_width -= padding_vw*100;
 
         var div_val = imgs[0].naturalHeight/imgs[0].naturalWidth;
@@ -431,7 +431,7 @@ function __init__(button_width){
         logger.style.position = "fixed";
         logger.innerHTML = `
         <div class="log_opener_wrapper" style="display: flex; position: absolute; z-index: 1001;">
-            <img class="log_opener" style="padding: 10px;" alt=""></img>
+            <img class="log_opener" alt=""></img>
         </div>
         <div class="log" style="z-index: 1000; display: none; background-color: white; min-width: 100vw; width: 100vw; min-height: 100vh; height: 100vh; padding-left: 2px;">
             <ul class="log_message_ul">
