@@ -1,12 +1,12 @@
 # monaca-logger
 A module makes console visible on monaca education editor
 
-# import
+## import
 `<script src="https://github.com/KANOKIw/monaca-logger/releases/download/1.1.3/logger.js"></script>`
 
 __put before any other script tags__
 
-# console
+## console
 **Attributes**
  * log(...data: `...any`):
     output a log.
