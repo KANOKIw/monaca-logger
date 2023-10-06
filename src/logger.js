@@ -23,8 +23,8 @@ class console{
                 <div class="log_message">▶ ${
                     __log.join(" ")
                     .replace(" ", "&nbsp;")
-                    .replace("<", "&lt;")
-                    .replace(">", "&gt;")
+                    .replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;")
                     .replace("\n", "<br>")
                 }</div>
             </li>
@@ -196,7 +196,10 @@ class console{
     static _error_log(error, ...__log){
         var location = this._getLocation(error);
         var clses = document.getElementsByClassName("log_message_ul");
-        var _log = __log.join(" ").replace("\n", "<br>");
+        var _log = __log.join(" ")
+            .replace("\n", "<br>")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;");
         var log_athttp_pos = _log.indexOf("@http");
 
         if (log_athttp_pos != -1){
