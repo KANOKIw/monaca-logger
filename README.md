@@ -2,7 +2,7 @@
 make console gui on monaca education editor
 
 ## import
-`<script src="https://github.com/KANOKIw/monaca-logger/releases/download/1.1.5/logger.js"></script>`
+`<script src="https://github.com/KANOKIw/monaca-logger/releases/download/1.1.6/logger.js"></script>`
 
 __put before any other script tags__
 
