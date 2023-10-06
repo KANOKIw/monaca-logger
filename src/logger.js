@@ -21,8 +21,8 @@ class console{
             <li class="log_message_element">
                 <div class="log_location">${location}&nbsp;</div>
                 <div class="log_message">▶ ${
-                    __log.join(" ")
-                    .replace(" ", "&nbsp;")
+                    __log.join("")
+                    .replaceAll(" ", "&nbsp;")
                     .replaceAll("<", "&lt;")
                     .replaceAll(">", "&gt;")
                     .replace("\n", "<br>")
@@ -222,7 +222,7 @@ class console{
                 _found.forEach(ul => urls.push(ul));
         }
         for (var val of urls){
-            _log = _log.replace(val, get_location_from_url(val));
+            _log = _log.replaceAll(val, get_location_from_url(val));
         }
         _log = _log.replace(" ", "&nbsp;");
         
