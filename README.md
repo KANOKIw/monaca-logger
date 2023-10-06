@@ -19,7 +19,7 @@ __put before any other script tags__
  * setButtonWidth(width: `number`):
     set `console button`'s width, heigt depends on width.
     `width` is what parsentage of `console button`'s width of window width.
-    default to 10 without settings.
+    default to 15 without settings.
  * setLogIcon(src: `string`):
     set `console botton`'s image src.
  * setPositionByQuadrant(quadrant: `number`):
