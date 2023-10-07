@@ -391,6 +391,7 @@ function __init__(button_width){
         font-family: Consolas, 'Courier New', monospace;
         width: auto;
         min-width: 100wv;
+        z-index: 2147483647;
     }
     .--log-message-element{
         list-style: none;

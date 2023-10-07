@@ -1,5 +1,5 @@
 # monaca-logger
-this module makes a console gui on monaca education editor
+this module creates a console gui paticular on monaca education editor
 
 ## import
 `<script src="https://github.com/KANOKIw/monaca-logger/releases/download/1.1.7/logger.js"></script>`
