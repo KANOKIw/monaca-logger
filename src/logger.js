@@ -16,11 +16,11 @@ class console{
      */
     static log(...__log){
         var location = this._getLocation();
-        var clses = document.getElementsByClassName("log_message_ul");
+        var clses = document.getElementsByClassName("--log-message-ol");
         var log_ = `
-            <li class="log_message_element">
-                <div class="log_location">${location}&nbsp;</div>
-                <div class="log_message">▶ ${
+            <li class="--log-message-element">
+                <div class="--log-location">${location}&nbsp;</div>
+                <div class="--log-message"><span class="--log-noth">▶&nbsp;</span>${
                     __log.join("")
                     .replaceAll(" ", "&nbsp;")
                     .replaceAll("<", "&lt;")
@@ -28,7 +28,7 @@ class console{
                     .replace("\n", "<br>")
                 }</div>
             </li>
-            <hr class="log_content_divider">
+            <hr class="--log-content-divider">
         `;
 
         if (STOPED) return;
@@ -50,7 +50,7 @@ class console{
 
 
     static show(){
-        var loggers = document.getElementsByClassName("logger");
+        var loggers = document.getElementsByClassName("--logger");
         Array.from(loggers)
         .forEach(logger => {
             logger.style.display = "block";
@@ -59,7 +59,7 @@ class console{
 
 
     static hide(){
-        var loggers = document.getElementsByClassName("logger");
+        var loggers = document.getElementsByClassName("--logger");
         Array.from(loggers)
         .forEach(logger => {
             logger.style.display = "none";
@@ -76,7 +76,7 @@ class console{
 
 
     static clear(){
-        var logs = document.getElementsByClassName("log");
+        var logs = document.getElementsByClassName("--log");
 
         PENDING_LOGS = [];
         for (var log of logs){
@@ -94,11 +94,13 @@ class console{
      * 
      * @param {number} button_width
      *  button_width`vw`
-     * @returns 
+     * @param {number} __button_height
+     *  Optional
+     * @returns
      *  no return
      */
-    static setButtonWidth(button_width){
-        var imgs = document.getElementsByClassName("log_opener");
+    static setButtonWidth(button_width, __button_height){
+        var imgs = document.getElementsByClassName("--log-opener");
         var padding_vw = 0 / window.innerWidth;
 
         button_width -= padding_vw*100;
@@ -106,6 +108,13 @@ class console{
         
         if (imgs.length > 0){
             var div_val = imgs[0].naturalHeight/imgs[0].naturalWidth;
+
+            if (isNaN(div_val)){
+                if (__button_height)
+                    div_val = __button_height/button_width;
+                else
+                    div_val = 1;
+            }
             var he = button_width*(div_val)+"vw";
 
             Array.from(imgs)
@@ -113,7 +122,7 @@ class console{
                 img.style.width = button_width+"vw";
                 img.style.height = he;
             });
-            Array.from(document.getElementsByClassName("log"))
+            Array.from(document.getElementsByClassName("--log"))
             .forEach(elem => {
                 elem.style.paddingTop = he;
             });
@@ -126,7 +135,7 @@ class console{
      * @param {number} quadrant 
      */
     static setPositionByQuadrant(quadrant){
-        var wrapper = document.getElementsByClassName("log_opener_wrapper");
+        var wrapper = document.getElementsByClassName("--log-opener-wrapper");
 
         function _forEach(func){
             Array.from(wrapper).forEach(i => func(i));
@@ -167,11 +176,12 @@ class console{
 
 
     static setLogIcon(path){
-        var imgs = document.getElementsByClassName("log_opener");
+        var imgs = document.getElementsByClassName("--log-opener");
 
         for (var img of imgs){
             img.src = path;
             img.style.backgroundImage = `url("${IMG_LOADING_ICON}")`;
+            this.setButtonWidth(CURRENT_BUTTON_WIDTH);
             img.addEventListener("load", function _load(){
                 console.setButtonWidth(CURRENT_BUTTON_WIDTH);
                 this.style.backgroundImage = "none";
@@ -183,7 +193,7 @@ class console{
 
 
     static _reset_position(){
-        var wrapper = document.getElementsByClassName("log_opener_wrapper");
+        var wrapper = document.getElementsByClassName("--log-opener-wrapper");
 
         function _forEach(func){
             Array.from(wrapper).forEach(i => func(i));
@@ -205,7 +215,7 @@ class console{
      */
     static _error_log(error, ...__log){
         var location = this._getLocation(error);
-        var clses = document.getElementsByClassName("log_message_ul");
+        var clses = document.getElementsByClassName("--log-message-ol");
         var _log = __log.join(" ")
             .replaceAll("<", "&lt;")
             .replaceAll(">", "&gt;")
@@ -237,19 +247,19 @@ class console{
         _log = _log.replace(" ", "&nbsp;");
         
         var log = `
-            <li class="log_message_element">
-                <div class="log_location">${location}&nbsp;</div>
-                <div class="log_message">
-                    <span style="color: red;">
+            <li class="--log-message-element">
+                <div class="--log-location">${location}&nbsp;</div>
+                <div class="--log-message">
+                    <span class="--log-noth" style="color: red;">
                         Error
                     </span>
-                    ▶
+                    <span class="--log-noth">▶</span>
                     <span style="color: red;">
                         ${_log}
                     </span>
                 </div>
             </li>
-            <hr class="log_content_divider">
+            <hr class="--log-content-divider">
         `;
 
         if (PENDING_LOGS.length > 0 || clses.length == 0){
@@ -269,7 +279,7 @@ class console{
 
 
     static _log(log_){
-        var clses = document.getElementsByClassName("log_message_ul");
+        var clses = document.getElementsByClassName("--log-message-ol");
 
         Array.from(clses)
         .forEach(elm => {
@@ -359,7 +369,7 @@ function __init__(button_width){
         document.createElement("body");
     }
 
-    document.body.innerHTML = `<div class="logger"></div>`+document.body.innerHTML;
+    document.body.innerHTML = `<div class="--logger"></div>`+document.body.innerHTML;
     document.body.style.margin = "0";
 
     var css = document.createElement("style");
@@ -377,31 +387,31 @@ function __init__(button_width){
     ].join("") + "}";
 
     var base_style_sheet = `
-    .logger{
+    .--logger{
         font-family: Consolas, 'Courier New', monospace;
         width: auto;
         min-width: 100wv;
     }
-    .log_message_element{
+    .--log-message-element{
         list-style: none;
         font-size: 20px;
     }
-    .log_message{
+    .--log-message{
         word-break: break-all;
     }
-    .log_location{
+    .--log-location{
         text-align: right;
         color: gray;
         right: 0;
     }
-    .log_opener{
+    .--log-opener{
         background-color: white;
         border: solid 2px black;
     }
-    .log_content_divider{
+    .--log-content-divider{
         margin: 0;
     }
-    .log_opener{
+    .--log-opener{
         background-image: url("${IMG_LOADING_ICON}");
         background-repeat: no-repeat;
         background-position: center center;
@@ -415,14 +425,23 @@ function __init__(button_width){
         -webkit-user-drag: none;
         -khtml-user-drag: none;
     }
-    .log_message_ul{
+    .--log-message-ol{
         padding: 10px;
     }
-    .log_opener_wrapper{
+    .--log-opener-wrapper{
         width: 100vw;
         height: 100vh;
         pointer-events: none;
         position: fixed;
+    }
+    .--log-noth{
+        user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
     }
     `;
 
@@ -435,22 +454,23 @@ function __init__(button_width){
     if (first)
         first.style.margin = "0";
     
-    var loggers = document.getElementsByClassName("logger");
+    var loggers = document.getElementsByClassName("--logger");
 
     for (var logger of loggers){
         logger.style.position = "fixed";
         logger.innerHTML = `
-        <div class="log_opener_wrapper" style="display: flex; position: absolute; z-index: 1001;">
-            <img class="log_opener" alt=""></img>
+        <div class="--log-opener-wrapper" style="display: flex; position: absolute; z-index: 1001;">
+            <img class="--log-opener" alt=""></img>
         </div>
-        <div class="log" style="z-index: 1000; display: none; background-color: white; min-width: 100vw; width: 100vw; min-height: 100vh; height: 100vh; padding-left: 2px;">
-            <ul class="log_message_ul">
-            </ul>
+        <div class="--log" style="z-index: 1000; display: none; background-color: white; min-width: 100vw; width: 100vw; min-height: 100vh; height: 100vh; padding-left: 2px;">
+            <ol class="--log-message-ol">
+                <span style="display: none" aria-hidden="true">上矢印・下矢印キーを使ってログを素早く確認しましょう。新しいログをうけとると、リストの一番下に追加されます。</span>
+            </ol>
         </div>`;
     }
     
-    var log_openers = document.getElementsByClassName("log_opener");
-    var log_elements = document.getElementsByClassName("log");
+    var log_openers = document.getElementsByClassName("--log-opener");
+    var log_elements = document.getElementsByClassName("--log");
 
     for (var opener of log_openers){
         opener.addEventListener("load", function _load(){
@@ -464,7 +484,7 @@ function __init__(button_width){
         
         opener.addEventListener("click", function(){
             if (LINED){
-                Array.from(document.getElementsByClassName("logger"))
+                Array.from(document.getElementsByClassName("--logger"))
                 .forEach(logger => {
                     logger.style.width = "0px";
                     logger.style.height = "0px";
@@ -479,7 +499,7 @@ function __init__(button_width){
 
                 console.setPositionByQuadrant(EV_QUADRANT);
             } else {
-                Array.from(document.getElementsByClassName("logger"))
+                Array.from(document.getElementsByClassName("--logger"))
                 .forEach(logger => {
                     logger.style.width = "100vw";
                     logger.style.height = "100vh";
@@ -502,10 +522,10 @@ function __init__(button_width){
 
 
 function _set_log_width(){
-    var logs = document.getElementsByClassName("log");
+    var logs = document.getElementsByClassName("--log");
     var max = 0;
     
-    Array.from(document.getElementsByClassName("log_message"))
+    Array.from(document.getElementsByClassName("--log-message"))
     .forEach(elem => {
         var wd = elem.innerWidth;
         max = (wd > max) ? wd : max;
@@ -519,14 +539,14 @@ function _set_log_width(){
 function _set_log_height(){
     var he = 0;
 
-    for (var lmc of document.getElementsByClassName("log_message_element")){
+    for (var lmc of document.getElementsByClassName("--log-message-element")){
         he += lmc.clientHeight;
-        for (var hr of document.getElementsByClassName("log_content_divider")){
+        for (var hr of document.getElementsByClassName("--log-content-divider")){
             he += .0015;
         }
     }
-    he /= document.getElementsByClassName("log_message_ul").length;
-    var logs = document.getElementsByClassName("log");
+    he /= document.getElementsByClassName("--log-message-ol").length;
+    var logs = document.getElementsByClassName("--log");
 
     Array.from(logs)
     .forEach(log => log.style.height = he+600+"px");
