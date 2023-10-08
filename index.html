@@ -18,12 +18,14 @@
             console.log("raising an exception...");
             throw new TypeError("not ok");
         }
-        console.setButtonWidth(20);
-        console.setPositionByQuadrant(3);
         window.onload = function(){
             console.log("load");
+            console.setInvisible(false);
+            console.setInvisible(false);
+        console.setButtonWidth(30);
+        console.setPositionByQuadrant(4);
             console.setLogIcon("https://style.potepan.com/wp-content/uploads/2020/02/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88-2020-02-16-10.17.37-300x187.png");
-            setInterval(function(){console.log("a")}, 1500);
+            setInterval(function(){console.log("a")}, 10000);
             setTimeout(function(){console.clear();console.log("log cleared!");},30000);
             a();
         }

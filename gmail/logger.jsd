@@ -4,7 +4,9 @@ var CURRENT_BUTTON_WIDTH = 15;
 var EV_QUADRANT = 1;
 var LOG_ICON = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSoguY19n3ex7GN9IA6A0K_L2aB7Kd-zEDnA&usqp=CAU";
 var IMG_LOADING_ICON = "https://cdn3.emoji.gg/emojis/1792-loading.gif";
-var STOPED = false;
+var STOPPED = false;
+var LOG_DIVIDER = `<hr class="--log-content-divider">`;
+var Invisible = false;
 
 
 class console{
@@ -25,13 +27,13 @@ class console{
                     .replaceAll(" ", "&nbsp;")
                     .replaceAll("<", "&lt;")
                     .replaceAll(">", "&gt;")
-                    .replace("\n", "<br>")
+                    .replaceAll("\n", "<br>")
                 }</div>
             </li>
-            <hr class="--log-content-divider">
+            
         `;
 
-        if (STOPED) return;
+        if (STOPPED) return;
         
         if (PENDING_LOGS.length > 0 || clses.length == 0){
             PENDING_LOGS.push({content: log_, type: "log"});
@@ -49,44 +51,71 @@ class console{
     }
 
 
-    static show(){
-        var loggers = document.getElementsByClassName("--logger");
-        Array.from(loggers)
-        .forEach(logger => {
-            logger.style.display = "block";
+    static warn(...__log){
+        var location = this._getLocation();
+        var clses = document.getElementsByClassName("--log-message-ol");
+        var log_ = `
+            <li class="--log-message-element">
+                <div class="--log-location">${location}&nbsp;</div>
+                <div class="--log-message">
+                    <span class="--log-noth" style="color: orange;">
+                        Warn
+                    </span>
+                    <span class="--log-noth">▶</span>
+                    <span style="color: orange;">${
+                        __log.join("")
+                        .replaceAll(" ", "&nbsp;")
+                        .replaceAll("<", "&lt;")
+                        .replaceAll(">", "&gt;")
+                        .replaceAll("\n", "<br>")
+                    }</span>
+                </div>
+            </li>
+        `;
+
+        if (STOPPED) return;
+        
+        if (PENDING_LOGS.length > 0 || clses.length == 0){
+            PENDING_LOGS.push({content: log_, type: "warn"});
+            return false;
+        }
+
+        Array.from(clses)
+        .forEach(elm => {
+            elm.innerHTML += log_;
         });
-    }
 
-
-    static hide(){
-        var loggers = document.getElementsByClassName("--logger");
-        Array.from(loggers)
-        .forEach(logger => {
-            logger.style.display = "none";
-        });
-    }
-
-
-    static setHidden(hidden){
-        if (hidden)
-            this.hide();
-        else
-            this.show();
+        _set_log_width();
+        _set_log_height();
+        return true;
     }
 
 
     static clear(){
-        var logs = document.getElementsByClassName("--log");
+        var log_ols = document.getElementsByClassName("--log-message-ol");
 
         PENDING_LOGS = [];
-        for (var log of logs){
-            log.innerHTML = "";
+        for (var log_ol of log_ols){
+            for (var ch of log_ol.childNodes){
+                if (ch.tagName == "LI" || ch.tagName == "li"){
+                    ch.remove();
+                }
+            }
+        }
+        for (var log of document.getElementsByClassName("--log")){
+            log.style.height = "auto";
         }
     }
 
 
+    static setInvisible(inv){
+        Invisible = inv;
+        (inv) ? this._hide() : this._show();
+    }
+
+
     static setStopped(_bool){
-        STOPED = _bool;
+        STOPPED = _bool;
     }
 
 
@@ -105,7 +134,7 @@ class console{
 
         button_width -= padding_vw*100;
         CURRENT_BUTTON_WIDTH = button_width;
-        
+
         if (imgs.length > 0){
             var div_val = imgs[0].naturalHeight/imgs[0].naturalWidth;
 
@@ -126,7 +155,9 @@ class console{
             .forEach(elem => {
                 elem.style.paddingTop = he;
             });
+            return;
         }
+        this.warn("On function: console.setButtonWidth\n    You had better call this on load.");
     }
 
 
@@ -137,12 +168,14 @@ class console{
     static setPositionByQuadrant(quadrant){
         var wrapper = document.getElementsByClassName("--log-opener-wrapper");
 
-        function _forEach(func){
-            Array.from(wrapper).forEach(i => func(i));
+        function _forEach(callback){
+            Array.from(wrapper).forEach(i => callback(i));
         }
 
         if (quadrant != undefined)
             EV_QUADRANT = quadrant;
+        if (wrapper.length == 0)
+            this.warn("On function: console.setPositionByQuadrant\n    You had better call this on load.");
 
         switch (quadrant){
             case 1:
@@ -189,6 +222,34 @@ class console{
             });
         }
         LOG_ICON = path;
+    }
+
+
+    static _show(){
+        var loggers = document.getElementsByClassName("--logger");
+
+        if (loggers.length == 0){
+            this.warn("On function: console._show\n    You had better call this on load.");
+            return;
+        }
+        Array.from(loggers)
+        .forEach(logger => {
+            logger.style.display = "block";
+        });
+    }
+
+
+    static _hide(){
+        var loggers = document.getElementsByClassName("--logger");
+
+        if (loggers.length == 0){
+            this.warn("On function: console._hide\n    You had better call this on load.");
+            return;
+        }
+        Array.from(loggers)
+        .forEach(logger => {
+            logger.style.display = "none";
+        });
     }
 
 
@@ -259,7 +320,6 @@ class console{
                     </span>
                 </div>
             </li>
-            <hr class="--log-content-divider">
         `;
 
         if (PENDING_LOGS.length > 0 || clses.length == 0){
@@ -396,6 +456,7 @@ function __init__(button_width){
     .--log-message-element{
         list-style: none;
         font-size: 20px;
+        border-bottom: solid 3px gray;
     }
     .--log-message{
         word-break: break-all;
@@ -469,6 +530,7 @@ function __init__(button_width){
             </ol>
         </div>`;
     }
+    console.setInvisible(Invisible);
     
     var log_openers = document.getElementsByClassName("--log-opener");
     var log_elements = document.getElementsByClassName("--log");
@@ -568,6 +630,7 @@ function write_pending_logs(){
         switch (type){
             case "log":
             case "error":
+            case "warn":
                 success = console._log(content);
                 break;
             default: 

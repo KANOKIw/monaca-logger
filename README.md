@@ -11,12 +11,15 @@ __put before any other script tags__
  * log(...data: `...any`):
    
     output a log.
- * setHidden(hidden: `boolean`):
+ * warn(...data: `...any`):
    
-    set whether `console button`s are hidden.
+    output a log with warn decoration.
  * clear():
    
     clear console logs.
+ * setInvisible(invisible: `boolean`):
+   
+    set whether `console button`s are invisible.
  * setStopped(stopped: `boolean`):
    
     set whether console logging is stopped.
