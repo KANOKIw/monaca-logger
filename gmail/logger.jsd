@@ -157,7 +157,7 @@ class console{
             });
             return;
         }
-        this.warn("On function: console.setButtonWidth\n    You had better call this on load.");
+        this.warn("On function: console.setButtonWidth(button_width, __button_height)\n    You had better call this on load.");
     }
 
 
@@ -175,7 +175,7 @@ class console{
         if (quadrant != undefined)
             EV_QUADRANT = quadrant;
         if (wrapper.length == 0)
-            this.warn("On function: console.setPositionByQuadrant\n    You had better call this on load.");
+            this.warn("On function: console.setPositionByQuadrant(quadrant)\n    You had better call this on load.");
 
         switch (quadrant){
             case 1:
@@ -229,7 +229,7 @@ class console{
         var loggers = document.getElementsByClassName("--logger");
 
         if (loggers.length == 0){
-            this.warn("On function: console._show\n    You had better call this on load.");
+            this.warn("On function: console._show()\n    You had better call this on load.");
             return;
         }
         Array.from(loggers)
@@ -243,7 +243,7 @@ class console{
         var loggers = document.getElementsByClassName("--logger");
 
         if (loggers.length == 0){
-            this.warn("On function: console._hide\n    You had better call this on load.");
+            this.warn("On function: console._hide()\n    You had better call this on load.");
             return;
         }
         Array.from(loggers)
@@ -507,7 +507,7 @@ function __init__(button_width){
     }
     `;
 
-    rules = document.createTextNode([fadein, fadeout, base_style_sheet].join("\n"));
+    var rules = document.createTextNode([fadein, fadeout, base_style_sheet].join("\n"));
     css.appendChild(rules);
     document.head.appendChild(css);
 
