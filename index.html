@@ -11,7 +11,7 @@
     <script src="src/logger.js"></script>
     <script>
         function a(){
-            console.log("calling b...");
+            console.log("calling ba...");
             b();
         }
         function b(){
@@ -19,14 +19,14 @@
             throw new TypeError("not ok");
         }console.setInvisible(false);
         window.onload = function(){
-            console.log("load");
+            console.log("§d§lHello!! §b§nNice§r §2to §3meet §6you §rhereawa!§2");
             console.setInvisible(true);
             console.setInvisible(false);
         console.setButtonWidth(10);
         console.setPositionByQuadrant(3);
             console.setLogIcon("https://style.potepan.com/wp-content/uploads/2020/02/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88-2020-02-16-10.17.37-300x187.png");
-            setInterval(function(){console.log("a")}, 10000);
-            setTimeout(function(){console.clear();console.log("log cleared!");},30000);
+            setInterval(function(){console.log("a")}, 100000);
+            setTimeout(function(){console.clear();console.log("log cleared!");},3000000);
             a();
         }
         e.n;

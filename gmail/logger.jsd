@@ -7,6 +7,30 @@ var IMG_LOADING_ICON = "https://cdn3.emoji.gg/emojis/1792-loading.gif";
 var STOPPED = false;
 var LOG_DIVIDER = `<hr class="--log-content-divider">`;
 var Invisible = false;
+const ColorList = {
+    "0": "#000000",  // Black
+    "1": "#0000AA",  // Dark Blue
+    "2": "#00AA00",  // Dark Green
+    "3": "#00AAAA",  // Dark Aqua
+    "4": "#AA0000",  // Dark Red
+    "5": "#AA00AA",  // Dark Purple
+    "6": "#FFAA00",  // Gold
+    "7": "#AAAAAA",  // Gray
+    "8": "#555555",  // Dark Gray
+    "9": "#5555FF",  // Blue
+    "a": "#55FF55",  // Green
+    "b": "#55FFFF",  // Aqua
+    "c": "#FF5555",  // Red
+    "d": "#FF55FF",  // Light Purple
+    "e": "#FFFF55",  // Yellow
+    "f": "#FFFFFF",  // White
+};
+const Dec = {
+    "l": "font-weight: bold;",
+    "m": "text-decoration: line-through;",
+    "n": "text-decoration: underline;",
+    "o": "font-style: italic;",
+};
 
 
 class console{
@@ -19,18 +43,18 @@ class console{
     static log(...__log){
         var location = this._getLocation();
         var clses = document.getElementsByClassName("--log-message-ol");
+        var content = __log.join(" ")
+            .replaceAll(" ", "&nbsp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll("\n", "<br>");
         var log_ = `
             <li class="--log-message-element">
                 <div class="--log-location">${location}&nbsp;</div>
-                <div class="--log-message"><span class="--log-noth">▶&nbsp;</span>${
-                    __log.join("")
-                    .replaceAll(" ", "&nbsp;")
-                    .replaceAll("<", "&lt;")
-                    .replaceAll(">", "&gt;")
-                    .replaceAll("\n", "<br>")
-                }</div>
+                <div class="--log-message"><span class="--log-noth">▶&nbsp;</span>
+                    ${this._parse_formatting_code(content)}
+                </div>
             </li>
-            
         `;
 
         if (STOPPED) return;
@@ -62,8 +86,8 @@ class console{
                         Warn
                     </span>
                     <span class="--log-noth">▶</span>
-                    <span style="color: orange;">${
-                        __log.join("")
+                    <span style="color: #FFAA00;">${
+                        __log.join(" ")
                         .replaceAll(" ", "&nbsp;")
                         .replaceAll("<", "&lt;")
                         .replaceAll(">", "&gt;")
@@ -392,6 +416,42 @@ class console{
             }
             return "undefined";
         }
+    }
+
+    /**
+     * 
+     * @param {string} str
+     *  log content
+     * @returns {string}
+     *  color formated html node string
+     */
+    static _parse_formatting_code(str) {
+        var dec_count = 0;
+        for (var pat in ColorList) {
+            var str_splited = str.split("\u00A7".concat(pat));
+            dec_count += str_splited.length - 1;
+            str = str_splited.join("</span><span style=\"color: ".concat(ColorList[pat], "\">"));
+        }
+        for (var decoration in Dec) {
+            var code = "\u00A7".concat(decoration);
+            while (str.includes(code)) {
+                var code = "\u00A7".concat(decoration);
+                dec_count++;
+                str = str.replace(code, "<span style=\"".concat(Dec[decoration], "\">"));
+                if (str.indexOf("§r") < str.indexOf(code) || str.indexOf(code) == -1) {
+                    var esc = "";
+                    for (var i = 0; i < dec_count; i++) {
+                        esc += "</span>";
+                    }
+                    str = str.replace("§r", esc);
+                    dec_count = 0;
+                }
+            }
+        }
+        for (var i = 0; i < dec_count; i++) {
+            str += "</span>";
+        }
+        return str;
     }
 }
 
