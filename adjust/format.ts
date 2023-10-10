@@ -1,3 +1,7 @@
+var ColorList: {[key: string]: string} = {};
+var Dec: {[key: string]: string} = {};
+
+
 function _parse_formatting_code(str: string): string{
     var cl_count: number = 0;
     var dec_count: number = 0;
