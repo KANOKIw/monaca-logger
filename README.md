@@ -43,28 +43,28 @@ __put before any other script tags__
  **put color code before decoration code**
  * color codes
 
-   §0: Black
-   §1: Dark Blue
-   §2: Dark Green
-   §3: Dark Aqua
-   §4: Dark Red
-   §5 Dark Purple
-   §6: Gold
-   §7: Gray
-   §8: Dark Gray
-   §9: Blue
-   §a: Green
-   §b: Aqua
-   §c: Red
-   §d: Light Purple
-   §e: Yellow
-   §f: White
+   §0: Black  
+   §1: Dark Blue  
+   §2: Dark Green  
+   §3: Dark Aqua  
+   §4: Dark Red  
+   §5 Dark Purple  
+   §6: Gold  
+   §7: Gray  
+   §8: Dark Gray  
+   §9: Blue  
+   §a: Green  
+   §b: Aqua  
+   §c: Red  
+   §d: Light Purple  
+   §e: Yellow  
+   §f: White  
 
  * decorations
-   §l: bold
-   §m: line-through
-   §n: underline
-   §o: italic
+   §l: bold  
+   §m: line-through  
+   §n: underline  
+   §o: italic  
 
  * special
    
