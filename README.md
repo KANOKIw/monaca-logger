@@ -41,7 +41,7 @@ __put before any other script tags__
 ## format codes
  **put color code before decoration code**
  really same as Minecraft  
- * ### color codes  
+ * ### color codes
    `§0`: Black  
    `§1`: Dark Blue  
    `§2`: Dark Green  
@@ -59,14 +59,14 @@ __put before any other script tags__
    `§e`: Yellow  
    `§f`: White  
 
- * ### decorations  
+ * ### decorations
    `§k`: obfuscated  
    `§l`: bold  
    `§m`: line-through  
    `§n`: underline  
    `§o`: italic  
 
- * ### special  
+ * ### special
    `§r`: reset
    
 
