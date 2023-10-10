@@ -2,7 +2,7 @@
 this module creates a console gui paticular on monaca education editor
 
 ## import
-`<script src="https://github.com/KANOKIw/monaca-logger/releases/download/2.0/logger.js"></script>`
+`<script src="https://github.com/KANOKIw/monaca-logger/releases/download/2.1/logger.js"></script>`
 
 __put before any other script tags__
 
