@@ -15,11 +15,13 @@
             b();
         }
         function b(){
-            console.log("raising an exception...");
+            console.log("throwing an exception...");
             throw new TypeError("not ok");
         }console.setInvisible(false);
+        console.clickButton();
         window.onload = function(){
-            console.log("§d§lHello!! §b§nNice§r §2to §3meet §6you §rhereawa!§2");
+            console.clickButton();
+            console.log("§k§d§lHello!! §b§nNice§r §3to§r §2§l§mmeet§7§n§m you here§r §l§ka§r §d§o§2uwu!");
             console.setInvisible(true);
             console.setInvisible(false);
         console.setButtonWidth(10);
