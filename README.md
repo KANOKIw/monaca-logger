@@ -63,7 +63,7 @@ __put before any other script tags__
       BOLD: "§l",
       STRIKETHROUGH: "§m",
       UNDERLINE: "§n",
-      ITALIC: "o",
+      ITALIC: "§o",
       RESET: "§r",
    };
    const Colour = Color;

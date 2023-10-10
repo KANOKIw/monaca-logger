@@ -53,7 +53,7 @@ const Color = {
     BOLD: "§l",
     STRIKETHROUGH: "§m",
     UNDERLINE: "§n",
-    ITALIC: "o",
+    ITALIC: "§o",
     RESET: "§r",
 };
 const Colour = Color;
