@@ -27,10 +27,11 @@ const ColorList = {
 };
 const Dec = {
     "k": 'class="--lgr-obfuscated"',
-    "l": 'style="font-weight: bold;"',
+    "l": 'style="font-weight: bolder;"',
     "m": 'style="text-decoration: line-through;"',
     "n": 'style="text-decoration: underline;"',
     "o": 'style="font-style: italic;"',
+    "p": 'style=""',
 };
 const Color = {
     BLACK: "§0",
@@ -496,7 +497,7 @@ class console{
     static _parse_formatting_code(str) {
         var cl_count = 0;
         var dec_count = 0;
-        str = "<lgr-cl>" + str;
+        str = "<lgr-cl>§p" + str;
         for (var pat in ColorList) {
             var str_splited = str.split("\u00A7".concat(pat));
             cl_count += str_splited.length - 1;
@@ -772,12 +773,14 @@ function onLoad(){
     this.setInterval(function(){
         var obfs = document.getElementsByClassName("--lgr-obfuscated");
         for (var obf of obfs){
-            var content = "";
-            for (var char of obf.textContent.split("")){
-                var c = parseInt(Math.random() * (obfuscaters.length -1));
-                content += obfuscaters[c];
+            for (var ch of obf.childNodes){
+                var content = "";
+                for (var char of ch.textContent.split("")){
+                    var c = parseInt(Math.random() * (obfuscaters.length -1));
+                    content += obfuscaters[c];
+                }
+                ch.textContent = content;
             }
-            obf.textContent = content;
         }
     }, 10);
     var me = this.setInterval(

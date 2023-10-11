@@ -5,7 +5,7 @@ var Dec: {[key: string]: string} = {};
 function _parse_formatting_code(str: string): string{
     var cl_count: number = 0;
     var dec_count: number = 0;
-    str = "<lgr-cl>" + str;
+    str = "<lgr-cl>§p" + str;
     for (var pat in ColorList){
         var str_splited: string[] = str.split(`§${pat}`);
         cl_count += str_splited.length -1;
